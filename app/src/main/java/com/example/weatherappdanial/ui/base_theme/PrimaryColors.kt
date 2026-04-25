@@ -20,7 +20,7 @@ data class PrimaryColors (
 
 val weatherColors = PrimaryColors(
     backgroundDark   = blue_300,
-    backgroundMedium = blue_200,  // карточки городов
-    backgroundLight  =  white100,  // поисковая строка
+    backgroundMedium = blue_200,
+    backgroundLight  =  white100,
     drawer           = gray_300
 )

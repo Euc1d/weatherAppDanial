@@ -29,7 +29,7 @@ fun PrimaryTheme(
     content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
-        LocalWeatherColors     provides colors,
+        LocalWeatherColors provides colors,
         LocalWeatherTypography provides typography,
         LocalWeatherShapes     provides shapes,
         content = content
