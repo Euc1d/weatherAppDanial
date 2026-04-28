@@ -15,8 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherAppDanial">
-        <service android:name=".location.service.LocationService"
-            android:foregroundServiceType="location"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
