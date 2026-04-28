@@ -6,8 +6,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Minutely(
-    @SerialName("dt")
-    val dt: Int = 0,
-    @SerialName("precipitation")
-    val precipitation: Int = 0
+    @SerialName("dt") val dt: Int = 0,
+    @SerialName("precipitation") val precipitation: Double = 0.0
 )

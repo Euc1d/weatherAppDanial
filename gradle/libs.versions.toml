@@ -13,11 +13,14 @@ kotlin = "2.3.20"
 composeBom = "2026.04.01"
 retrofit = "3.0.0"
 retrofit2KotlinxSerializationConverter = "1.0.0"
+roomCompiler = "2.8.4"
 uiTextGoogleFonts = "1.11.0"
 play-services-location = "21.3.0"
 okhttp = "5.3.2"
 
 [libraries]
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomCompiler" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "play-services-location"}
 androidx-compose-ui-text-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
