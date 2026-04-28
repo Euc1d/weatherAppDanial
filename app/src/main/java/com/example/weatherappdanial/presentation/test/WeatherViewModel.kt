@@ -52,7 +52,6 @@ class WeatherViewModel @Inject constructor(
 
                                     }
                                     WeatherError.INTERNET_ERROR ->{
-                                        _uiState.value =
                                     }
                                     else -> {}
                                 }
