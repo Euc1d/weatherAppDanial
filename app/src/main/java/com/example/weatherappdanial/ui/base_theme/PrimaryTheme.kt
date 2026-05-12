@@ -9,16 +9,12 @@ val LocalWeatherTypography = staticCompositionLocalOf { weatherTypography }
 val LocalWeatherShapes     = staticCompositionLocalOf { weatherShapes }
 
 object PrimaryTheme {
-
     val colors: PrimaryColors
-        @Composable
-        get() = LocalWeatherColors.current
+        @Composable get() = LocalWeatherColors.current
     val typography: PrimaryTypography
-        @Composable
-        get() = LocalWeatherTypography.current
+        @Composable get() = LocalWeatherTypography.current
     val shapes: PrimaryShapes
-        @Composable
-        get() = LocalWeatherShapes.current
+        @Composable get() = LocalWeatherShapes.current
 }
 
 @Composable
@@ -29,9 +25,9 @@ fun PrimaryTheme(
     content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
-        LocalWeatherColors provides colors,
+        LocalWeatherColors     provides colors,
         LocalWeatherTypography provides typography,
         LocalWeatherShapes     provides shapes,
-        content = content
+        content                = content
     )
 }
