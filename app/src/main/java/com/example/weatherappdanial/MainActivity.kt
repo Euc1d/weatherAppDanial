@@ -5,22 +5,28 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.example.weatherappdanial.presentation.screens.main.WeatherScreen
 import com.example.weatherappdanial.presentation.test.WeatherTestScreen
+import com.example.weatherappdanial.presentation.test.WeatherViewModel
 import com.example.weatherappdanial.ui.base_theme.PrimaryTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    private val viewModel: WeatherViewModel by viewModels()
+
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
-        permissions.forEach { (perm, granted) ->
-            println("WeatherTest: $perm -> $granted")
+        val granted = permissions.values.any { it }
+        if (granted) {
+            viewModel.loadWeather()
         }
     }
 
@@ -29,7 +35,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PrimaryTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    WeatherTestScreen(
+                    WeatherScreen(
                         onRequestPermission = {
                             permissionLauncher.launch(
                                 arrayOf(

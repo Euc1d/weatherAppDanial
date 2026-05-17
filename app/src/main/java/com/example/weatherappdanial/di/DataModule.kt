@@ -38,7 +38,7 @@ interface DataModule {
                 context,
                 WeatherDataBase::class.java,
                 "weather_db"
-            ).build()
+            ).fallbackToDestructiveMigration(true).build()
 
         @Provides
         fun provideWeatherDao(db: WeatherDataBase): WeatherDao = db.weatherDao()
@@ -65,7 +65,7 @@ interface DataModule {
             converter: Converter.Factory
         ): Retrofit {
             return Retrofit.Builder()
-                .baseUrl("https://api.openweathermap.org/")//на проде так не буду делать просто лень(
+                .baseUrl("https://api.openweathermap.org/")//на проде так не буду делать просто лень её нужно вывести и настраивать в билдконфинге(
                 .addConverterFactory(converter)
                 .build()
         }

@@ -5,5 +5,7 @@ data class TodayData(
     val currentTemp: Int,
     val maxTemp: Int,
     val minTemp: Int,
-    val todayDescription: String
+    val todayDescription: String,
+    val avgMaxTemp      : Int,
+    val diffFromAvgMax  : Int
 )

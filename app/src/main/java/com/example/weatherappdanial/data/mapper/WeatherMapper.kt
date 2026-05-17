@@ -67,30 +67,57 @@ fun Daily.toDailyEntity(cityName: String): DailyForecastEntity {
         cityName = cityName,
         icon = weather.firstOrNull()?.icon.orEmpty(),
         minTemp = "${temp.min.roundToInt()}°",
-        maxTemp = "${temp.max.roundToInt()}°"
+        maxTemp = "${temp.max.roundToInt()}°",
+        summary = summary
     )
 }
 
 
-fun WeatherWithRelations.toDomain(): WeatherData = WeatherData(
-    todayData = TodayData(
-        cityName = weather.cityName,
-        currentTemp = weather.currentTemp,
-        maxTemp = weather.maxTemp,
-        minTemp = weather.minTemp,
-        todayDescription = weather.todayDescription
-    ),
-    hourlyForeCast = hourlyForecast
-        .sortedBy { it.timeStamp }
-        .map { it.toDomain() },
-    dailyForeCast = dailyForecast.map { it.toDomain() },
-    weatherDetail = forecastDetails?.toDomain() ?: ForeCastDetails(
-        windInfo = WindInfo(0, 0, 0),
-        sunrise = 0L, sunset = 0L,
-        humidity = 0, pressure = 0,
-        dewPoint = 0.0, feelsLike = 0.0,
-        UvIndex = 0, visibility = 0
+fun WeatherWithRelations.toDomain(): WeatherData {
+    // Средний макс по всем дням (берём из строки "11°" -> 11)
+    val maxTemps = dailyForecast.mapNotNull {
+        it.maxTemp.dropLast(1).toIntOrNull()
+    }
+    val avgMax     = if (maxTemps.isNotEmpty()) maxTemps.average().roundToInt() else 0
+    val todayMax   = weather.maxTemp
+    val diff       = todayMax - avgMax
+
+    return WeatherData(
+        todayData = TodayData(
+            cityName         = weather.cityName,
+            currentTemp      = weather.currentTemp,
+            maxTemp          = todayMax,
+            minTemp          = weather.minTemp,
+            todayDescription = weather.todayDescription,
+            avgMaxTemp       = avgMax,
+            diffFromAvgMax   = diff
+        ),
+        hourlyForeCast = hourlyForecast.sortedBy { it.timeStamp }.map { it.toDomain() },
+        dailyForeCast  = dailyForecast
+            .sortedBy { it.dayOfWeek.substringAfterLast("_").toLongOrNull() ?: 0L }
+            .mapIndexed { i, e -> e.toDomain(isToday = i == 0) },
+        weatherDetail  = forecastDetails?.toDomain() ?: ForeCastDetails(
+            windInfo = WindInfo(0, 0, 0),
+            sunrise = 0L, sunset = 0L,
+            humidity = 0, pressure = 0,
+            dewPoint = 0.0, feelsLike = 0.0,
+            UvIndex = 0, visibility = 0
+        ),
+        cachedAt = weather.cachedAt
     )
+}
+
+private fun DailyForecastEntity.toDomain(isToday: Boolean = false): DailyForeCast = DailyForeCast(
+    dayOfWeek = if (isToday) "Сегодня" else
+        dayOfWeek.substringAfterLast("_").let { dt ->
+            SimpleDateFormat("EEE", Locale("ru"))
+                .format(Calendar.getInstance().apply { timeInMillis = dt.toLong() * 1000 }.time)
+                .replaceFirstChar { it.uppercase() }
+        },
+    icon    = icon,
+    minTemp = minTemp,
+    maxTemp = maxTemp,
+    summary = summary
 )
 
 private fun HourlyForecastEntity.toDomain(): HourlyForeCast = HourlyForeCast(
@@ -102,14 +129,14 @@ private fun HourlyForecastEntity.toDomain(): HourlyForeCast = HourlyForeCast(
 
 private fun DailyForecastEntity.toDomain(): DailyForeCast = DailyForeCast(
     dayOfWeek = dayOfWeek.substringAfterLast("_").let { dt ->
-        // Восстанавливаем читаемый день из dt
         SimpleDateFormat("EEE", Locale("ru"))
             .format(Calendar.getInstance().apply { timeInMillis = dt.toLong() * 1000 }.time)
             .replaceFirstChar { it.uppercase() }
     },
     icon = icon,
     minTemp = minTemp,
-    maxTemp = maxTemp
+    maxTemp = maxTemp,
+    summary = summary
 )
 
 private fun ForecastDetailsEntity.toDomain(): ForeCastDetails = ForeCastDetails(
