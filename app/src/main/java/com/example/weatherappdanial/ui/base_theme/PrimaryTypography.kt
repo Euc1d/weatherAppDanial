@@ -49,7 +49,6 @@ data class PrimaryTypography(
 
 val weatherTypography = PrimaryTypography(
 
-    // WeatherEntity — top section
     cityTitle = TextStyle(
         fontFamily   = FontFamily.Default,
         fontWeight   = FontWeight.Normal,
@@ -59,10 +58,10 @@ val weatherTypography = PrimaryTypography(
     ),
     temperatureDisplay = TextStyle(
         fontFamily   = FontFamily.Default,
-        fontWeight   = FontWeight.Thin,     // matches Apple Weather giant temp
+        fontWeight   = FontWeight.Thin,
         fontSize     = 80.sp,
         lineHeight   = 80.sp,
-        letterSpacing = (-2).sp,            // tight tracking for large display
+        letterSpacing = (-2).sp,
     ),
     conditionLabel = TextStyle(
         fontFamily   = FontFamily.Default,
@@ -79,7 +78,6 @@ val weatherTypography = PrimaryTypography(
         letterSpacing = 0.1.sp,
     ),
 
-    // HourlyForecastEntity — horizontal strip
     hourlyTime = TextStyle(
         fontFamily   = FontFamily.Default,
         fontWeight   = FontWeight.Medium,
@@ -95,7 +93,6 @@ val weatherTypography = PrimaryTypography(
         letterSpacing = 0.sp,
     ),
 
-    // DailyForecastEntity — 10-day list
     forecastDayName = TextStyle(
         fontFamily   = FontFamily.Default,
         fontWeight   = FontWeight.Medium,
@@ -111,17 +108,16 @@ val weatherTypography = PrimaryTypography(
         letterSpacing = 0.sp,
     ),
 
-    // ForecastDetailsEntity — wide 2-column grid cards
     detailCardLabel = TextStyle(
         fontFamily   = FontFamily.Default,
         fontWeight   = FontWeight.SemiBold,
         fontSize     = 11.sp,
         lineHeight   = 16.sp,
-        letterSpacing = 0.8.sp,             // spread out like ALL-CAPS label
+        letterSpacing = 0.8.sp,
     ),
     detailCardValue = TextStyle(
         fontFamily   = FontFamily.Default,
-        fontWeight   = FontWeight.Regular,  // medium weight, large size reads well
+        fontWeight   = FontWeight.Normal ,
         fontSize     = 28.sp,
         lineHeight   = 34.sp,
         letterSpacing = (-0.5).sp,
@@ -134,7 +130,6 @@ val weatherTypography = PrimaryTypography(
         letterSpacing = 0.1.sp,
     ),
 
-    // Legacy / compat
     cardTextStyle = TextStyle(
         fontFamily   = FontFamily.Default,
         fontWeight   = FontWeight.Medium,

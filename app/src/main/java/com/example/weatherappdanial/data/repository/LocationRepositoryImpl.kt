@@ -1,4 +1,4 @@
-package com.example.weatherappdanial.data.reposiitory
+package com.example.weatherappdanial.data.repository
 
 import android.Manifest
 import android.content.Context

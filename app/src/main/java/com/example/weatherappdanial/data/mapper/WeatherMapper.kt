@@ -78,7 +78,7 @@ fun WeatherWithRelations.toDomain(): WeatherData = WeatherData(
         currentTemp = weather.currentTemp,
         maxTemp = weather.maxTemp,
         minTemp = weather.minTemp,
-        todayDescription = weather.todayDescription
+        todayDescription = weather.todayDescription,
     ),
     hourlyForeCast = hourlyForecast
         .sortedBy { it.timeStamp }
@@ -90,7 +90,8 @@ fun WeatherWithRelations.toDomain(): WeatherData = WeatherData(
         humidity = 0, pressure = 0,
         dewPoint = 0.0, feelsLike = 0.0,
         UvIndex = 0, visibility = 0
-    )
+    ),
+    cachedAt       = weather.cachedAt
 )
 
 private fun HourlyForecastEntity.toDomain(): HourlyForeCast = HourlyForeCast(

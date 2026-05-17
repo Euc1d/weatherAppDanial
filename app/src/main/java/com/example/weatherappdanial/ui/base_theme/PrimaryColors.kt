@@ -25,6 +25,7 @@ val light_blue100   = Color(0xFFC9FFFA)
 val blue_200        = Color(0xFF377DC3)
 val blue_300        = Color(0xFF1E3A56)   // corrected: was 0xFF3916E9 (purple), now proper navy
 val gray_300        = Color(0x85424d58)
+val white_blue_100        = Color(0xFF5BC8F5)
 
 // ─── Theme contract ───────────────────────────────────────────
 @Immutable
@@ -43,6 +44,8 @@ data class PrimaryColors(
     val textPrimary: Color,       // city name, main temp, card values
     val textSecondary: Color,     // condition description, min/max, subtexts
     val textHint: Color,          // small ALL-CAPS labels on detail cards
+
+    val tempIndicator: Color
 )
 
 val weatherColors = PrimaryColors(
@@ -55,4 +58,5 @@ val weatherColors = PrimaryColors(
     textPrimary       = white_full,
     textSecondary     = white_70,
     textHint          = white_45,
+    tempIndicator = white_blue_100
 )
