@@ -1,6 +1,5 @@
 package com.example.weatherappdanial.data.repository
 
-import android.util.Log
 import com.example.weatherappdanial.data.local.WeatherDao
 import com.example.weatherappdanial.data.mapper.toDailyEntity
 import com.example.weatherappdanial.data.mapper.toDetailsEntity
@@ -11,7 +10,6 @@ import com.example.weatherappdanial.data.remote.api.WeatherApiService
 import com.example.weatherappdanial.domain.location_model.Location
 import com.example.weatherappdanial.domain.repository.WeatherRepository
 import com.example.weatherappdanial.domain.result.Result
-import com.example.weatherappdanial.domain.result.RootError
 import com.example.weatherappdanial.domain.result.WeatherError
 import com.example.weatherappdanial.domain.weather_model.WeatherData
 import kotlinx.coroutines.flow.Flow
@@ -42,7 +40,7 @@ class WeatherRepositoryImpl @Inject constructor(
                 dao.insertFullWeather(
                     weather = dto.toWeatherEntity(city),
                     hourly = dto.hourly.take(24).map { it.toHourlyEntity(city) },
-                    daily = dto.daily.take(7).map { it.toDailyEntity(city) },
+                    daily = dto.daily.take(10).map { it.toDailyEntity(city) },
                     details = dto.toDetailsEntity(city)
                 )
                 city

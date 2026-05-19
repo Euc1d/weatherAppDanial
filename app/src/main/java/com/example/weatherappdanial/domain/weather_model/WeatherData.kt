@@ -4,5 +4,6 @@ data class WeatherData(
     val todayData: TodayData,
     val hourlyForeCast: List<HourlyForeCast>,
     val dailyForeCast: List<DailyForeCast>,
-    val weatherDetail: ForeCastDetails
+    val weatherDetail: ForeCastDetails,
+    val cachedAt       : Long = System.currentTimeMillis()
 )

@@ -1,5 +1,6 @@
 package com.example.weatherappdanial.data.local.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
@@ -22,5 +23,6 @@ data class DailyForecastEntity(
     val cityName: String,
     val icon: String,
     val minTemp: String,
-    val maxTemp: String
+    val maxTemp: String,
+    @ColumnInfo(defaultValue = "") val summary: String = ""
 )

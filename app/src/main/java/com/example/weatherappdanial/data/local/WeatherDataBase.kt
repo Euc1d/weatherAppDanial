@@ -14,7 +14,7 @@ import com.example.weatherappdanial.data.local.entity.WeatherEntity
         DailyForecastEntity::class,
         ForecastDetailsEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class WeatherDataBase : RoomDatabase() {

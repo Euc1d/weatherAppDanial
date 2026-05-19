@@ -1,3 +1,85 @@
 <resources>
     <string name="app_name">weatherAppDanial</string>
+    <string name="forecast_10_days">Прогноз на 10 дней</string>
+
+    <string name="wind">Ветер</string>
+    <string name="wind_gusts">Порывы ветра</string>
+    <string name="wind_direction">Направление</string>
+    <string name="wind_speed_format">%1$d км/ч</string>
+    <string name="wind_direction_format">%1$d° %2$s</string>
+
+    <string name="pull_to_refresh">Потяните для обновления</string>
+
+    <string name="temperature_format">%1$d°</string>
+    <string name="max_min_temp">Макс.: %1$d°, мин.: %2$d°</string>
+
+    <string name="sunset">Закат</string>
+    <string name="sunrise">Восход</string>
+
+    <string name="no_connection_cached">Нет соединения. Показаны кешированные данные.</string>
+    <string name="update_error_stale">Ошибка обновления. Данные могут быть устаревшими.</string>
+    <string name="pull_to_refresh_hint">Потяните вниз для обновления</string>
+
+    <string name="location_permission_title">Нет доступа к геолокации</string>
+    <string name="location_permission_desc">Разрешите приложению определять местоположение.</string>
+    <string name="allow">Разрешить</string>
+
+    <string name="gps_disabled_title">GPS отключён</string>
+    <string name="gps_disabled_desc">Включите службы геолокации в настройках.</string>
+    <string name="open_settings">Настройки</string>
+
+    <string name="no_internet_title">Нет подключения</string>
+    <string name="no_internet_desc">Проверьте интернет-соединение и повторите.</string>
+    <string name="retry">Повторить</string>
+
+    <string name="server_error_title">Ошибка сервера</string>
+    <string name="server_error_desc">Сервер временно недоступен.</string>
+
+    <string name="unknown_error_title">Что-то пошло не так</string>
+    <string name="unknown_error_desc">Попробуйте обновить приложение.</string>
+
+    <!-- UV Index -->
+    <string name="uv_index">УФ-индекс</string>
+    <string name="uv_low">Низкий</string>
+    <string name="uv_moderate">Умеренный</string>
+    <string name="uv_high">Высокий</string>
+    <string name="uv_very_high">Очень высокий</string>
+    <string name="uv_extreme">Экстремальный</string>
+
+    <!-- Sun times -->
+    <string name="sunrise_in">Восход в %1$s</string>
+
+    <!-- Humidity -->
+    <string name="humidity">Влажность</string>
+    <string name="dew_point">Точка росы: %1$d°</string>
+
+    <!-- Pressure -->
+    <string name="pressure">Давление</string>
+    <string name="hpa">гПа</string>
+    <string name="avg_label">В среднем</string>
+    <string name="equal_avg_max">= среднесуточного максимума</string>
+    <string name="below_avg_max">&lt; среднесуточного максимума</string>
+    <string name="above_avg_max">&gt; среднесуточного максимума</string>
+
+    <!-- Feels like -->
+    <string name="feels_like">Ощущается как</string>
+    <string name="warmer_than_actual">Теплее, чем на самом деле.</string>
+    <string name="colder_than_actual">Холоднее, чем на самом деле.</string>
+
+    <!-- Last updated -->
+    <string name="last_updated_just_now">Только что</string>
+    <string name="last_updated_minutes_ago">Обновлено %1$d мин. назад</string>
+    <string name="last_updated_at">Обновлено в %1$s</string>
+    <string name="now">Сейчас</string>
+
+    <string-array name="wind_directions">
+        <item>С</item>
+        <item>СВ</item>
+        <item>В</item>
+        <item>ЮВ</item>
+        <item>Ю</item>
+        <item>ЮЗ</item>
+        <item>З</item>
+        <item>СЗ</item>
+    </string-array>
 </resources>

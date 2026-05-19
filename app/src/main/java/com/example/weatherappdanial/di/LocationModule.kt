@@ -1,7 +1,7 @@
 package com.example.weatherappdanial.di
 
 import android.content.Context
-import com.example.weatherappdanial.data.reposiitory.LocationRepositoryImpl
+import com.example.weatherappdanial.data.repository.LocationRepositoryImpl
 import com.example.weatherappdanial.domain.repository.LocationRepository
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
