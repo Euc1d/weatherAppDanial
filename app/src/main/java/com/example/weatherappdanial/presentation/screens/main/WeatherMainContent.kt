@@ -108,6 +108,7 @@ fun WeatherMainContent(
     val listState = rememberLazyListState()
     val headerAlpha by remember {
         derivedStateOf {
+
             val scrollOffset = listState.firstVisibleItemScrollOffset
             val firstIndex = listState.firstVisibleItemIndex
             val fadeDistance = 700f
