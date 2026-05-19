@@ -101,6 +101,7 @@ fun WeatherMainContent(
     onDismissBanner: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
     val data = state.data
     val isRaining = data.todayData.todayDescription.isRaining()
     val background = remember(isRaining) { resolveBackground(isRaining) }
