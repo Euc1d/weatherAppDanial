@@ -31,7 +31,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Mic
-import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.WifiOff
@@ -103,11 +102,14 @@ fun CitiesScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment     = Alignment.CenterVertically
                 ) {
-                    Text("Погода",
-                        style = PrimaryTheme.typography.temperatureDisplay.copy(fontSize = 32.sp),
+                    Text(    stringResource(R.string.weather_title),
+                        style = PrimaryTheme.typography.forecastDayName.copy(fontSize = 32.sp),
                         color = PrimaryTheme.colors.textPrimary)
-                    IconButton(onClick = { showSettings = true }) {   // ← открываем шит
-                        Icon(Icons.Default.MoreHoriz, null,
+                    IconButton(
+                        onClick = { showSettings = true }) {
+                        Icon(
+                        painter = painterResource(R.drawable.ic_button_city_settings),
+                            null,
                             tint = PrimaryTheme.colors.textPrimary)
                     }
                 }
@@ -369,12 +371,11 @@ private fun SearchSheet(
                                 color = PrimaryTheme.colors.textPrimary
                             )
                             Text(
-                                "${String.format("%.4f", city.lat)}, ${
-                                    String.format(
-                                        "%.4f",
-                                        city.lon
-                                    )
-                                }",
+                                stringResource(
+                                    R.string.coordinates_format,
+                                    city.lat,
+                                    city.lon
+                                ),
                                 style = PrimaryTheme.typography.detailCardSubtext,
                                 color = PrimaryTheme.colors.textHint
                             )
@@ -424,10 +425,9 @@ private fun SettingsSheet(
                 .clickable(
                     indication        = null,
                     interactionSource = remember { MutableInteractionSource() },
-                    onClick           = {}   // перехватываем клик, чтобы не закрыть
+                    onClick           = {}
                 )
         ) {
-            // Handle
             Box(
                 modifier = Modifier
                     .padding(top = 12.dp)
@@ -440,8 +440,8 @@ private fun SettingsSheet(
             Spacer(Modifier.height(8.dp))
 
             SettingsItem(
-                label    = "Градусы Цельсия",
-                prefix   = "°C",
+                label = stringResource(R.string.celsius_label),
+                prefix = stringResource(R.string.celsius_symbol),
                 selected = currentUnit == TemperatureUnit.CELSIUS,
                 onClick  = { onUnitSelected(TemperatureUnit.CELSIUS); onDismiss() }
             )
@@ -453,8 +453,8 @@ private fun SettingsSheet(
             )
 
             SettingsItem(
-                label    = "Градусы Фаренгейта",
-                prefix   = "°F",
+                label = stringResource(R.string.fahrenheit_label),
+                prefix = stringResource(R.string.fahrenheit_symbol),
                 selected = currentUnit == TemperatureUnit.FAHRENHEIT,
                 onClick  = { onUnitSelected(TemperatureUnit.FAHRENHEIT); onDismiss() }
             )
@@ -590,7 +590,10 @@ private fun CityCard(
 
                 summary?.let {
                     Text(
-                        "${it.currentTemp.formatTemp(tempUnit)}°",
+                        stringResource(
+                            R.string.temperature_format,
+                            it.currentTemp.formatTemp(tempUnit)
+                        ),
                         style = ty.temperatureDisplay.copy(fontSize = 48.sp),
                         color = c.textPrimary
                     )
@@ -609,12 +612,13 @@ private fun CityCard(
                         style = ty.conditionLabel,
                         color = c.textSecondary
                     )
-
+                    val min =it.minTemp.formatTemp(tempUnit)
+                    val max =it.maxTemp.formatTemp(tempUnit)
                     Text(
                         stringResource(
                             R.string.max_min_label,
-                            it.maxTemp.formatTemp(tempUnit),
-                            it.minTemp.formatTemp(tempUnit),
+                            max,
+                            min,
                         ),
                         style = ty.minMaxLabel,
                         color = c.textSecondary

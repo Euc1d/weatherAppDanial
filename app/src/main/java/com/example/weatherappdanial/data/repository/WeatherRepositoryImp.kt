@@ -1,5 +1,6 @@
 package com.example.weatherappdanial.data.repository
 
+import com.example.weatherappdanial.BuildConfig
 import com.example.weatherappdanial.data.local.entity.weather.WeatherDao
 import com.example.weatherappdanial.data.mapper.toDailyEntity
 import com.example.weatherappdanial.data.mapper.toDetailsEntity
@@ -31,7 +32,7 @@ class WeatherRepositoryImpl @Inject constructor(
 
 
             val cityName = try {
-                val dto = api.loadWeatherData(location.lat, location.lon)
+                val dto = api.loadWeatherData(location.lat, location.lon, BuildConfig.WEATHER_API_KEY)
 
                 val city = dto.timezone
                     .substringAfterLast("/")
