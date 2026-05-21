@@ -1,4 +1,4 @@
-package com.example.weatherappdanial.data.local.entity
+package com.example.weatherappdanial.data.local.entity.weather
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,6 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.example.weatherappdanial.data.local.entity.weather.WeatherEntity
 
 @Entity(
     tableName = "daily_forecast",

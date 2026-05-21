@@ -6,6 +6,7 @@ data class TodayData(
     val maxTemp: Int,
     val minTemp: Int,
     val todayDescription: String,
-    val avgMaxTemp      : Int,
-    val diffFromAvgMax  : Int
+    val avgMaxTemp : Int,
+    val diffFromAvgMax: Int,
+    val timezoneOffsetSec: Int = 0
 )

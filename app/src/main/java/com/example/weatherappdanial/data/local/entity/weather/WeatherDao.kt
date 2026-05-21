@@ -1,16 +1,10 @@
-package com.example.weatherappdanial.data.local
-
+package com.example.weatherappdanial.data.local.entity.weather
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.example.weatherappdanial.data.local.entity.DailyForecastEntity
-import com.example.weatherappdanial.data.local.entity.ForecastDetailsEntity
-import com.example.weatherappdanial.data.local.entity.HourlyForecastEntity
-import com.example.weatherappdanial.data.local.entity.WeatherEntity
-import com.example.weatherappdanial.data.local.entity.WeatherWithRelations
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -20,16 +14,16 @@ interface WeatherDao {
     @Query("SELECT * FROM weather WHERE cityName = :cityName")
     fun getWeatherData(cityName: String): Flow<WeatherWithRelations?>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun insertWeather(weather: WeatherEntity)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun insertHourlyForecast(items: List<HourlyForecastEntity>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun insertDailyForecast(items: List<DailyForecastEntity>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun insertForecastDetails(details: ForecastDetailsEntity)
 
     @Transaction

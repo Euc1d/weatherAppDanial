@@ -1,4 +1,4 @@
-package com.example.weatherappdanial.data.local.entity
+package com.example.weatherappdanial.data.local.entity.weather
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -11,5 +11,6 @@ data class WeatherEntity(
     val maxTemp: Int,
     val minTemp: Int,
     val todayDescription: String,
+    val timezoneOffsetSec : Int  = 0,
     val cachedAt: Long = System.currentTimeMillis()
 )

@@ -1,10 +1,11 @@
-package com.example.weatherappdanial.data.local.entity
+package com.example.weatherappdanial.data.local.entity.weather
 
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.example.weatherappdanial.data.local.entity.weather.WeatherEntity
 
 
 @Entity(

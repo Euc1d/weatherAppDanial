@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.animation.core)
+    implementation(libs.androidx.compose.animation)
     ksp("com.google.dagger:hilt-android-compiler:2.59.2") // в либс переводить не буду  так как позже миграция на коин
 
     implementation(libs.coil.compose)

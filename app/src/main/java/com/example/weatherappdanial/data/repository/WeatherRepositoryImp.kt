@@ -1,6 +1,6 @@
 package com.example.weatherappdanial.data.repository
 
-import com.example.weatherappdanial.data.local.WeatherDao
+import com.example.weatherappdanial.data.local.entity.weather.WeatherDao
 import com.example.weatherappdanial.data.mapper.toDailyEntity
 import com.example.weatherappdanial.data.mapper.toDetailsEntity
 import com.example.weatherappdanial.data.mapper.toDomain

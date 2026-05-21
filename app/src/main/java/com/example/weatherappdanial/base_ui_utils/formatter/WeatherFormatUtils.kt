@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.example.weatherappdanial.R
+import com.example.weatherappdanial.domain.pref.TemperatureUnit
 import com.example.weatherappdanial.domain.weather_model.ForeCastDetails
 import com.example.weatherappdanial.domain.weather_model.HourlyForeCast
 import com.example.weatherappdanial.domain.weather_model.TodayData
@@ -130,3 +131,7 @@ fun TodayData.toAvgCard(): DetailCardData = DetailCardData(
     else R.string.equal_avg_max,
     icon      = R.drawable.ic_graph
 )
+fun Int.formatTemp(unit: TemperatureUnit): Int = when (unit) {
+    TemperatureUnit.CELSIUS    -> this
+    TemperatureUnit.FAHRENHEIT -> (this * 9 / 5) + 32
+}

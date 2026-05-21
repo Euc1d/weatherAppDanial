@@ -6,13 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
-import com.example.weatherappdanial.presentation.screens.main.WeatherScreen
-import com.example.weatherappdanial.presentation.test.WeatherTestScreen
-import com.example.weatherappdanial.presentation.test.WeatherViewModel
+import com.example.weatherappdanial.navigation.AppNavigation
+import com.example.weatherappdanial.presentation.screens.main.WeatherViewModel
 import com.example.weatherappdanial.ui.base_theme.PrimaryTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,18 +29,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PrimaryTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    WeatherScreen(
-                        onRequestPermission = {
-                            permissionLauncher.launch(
-                                arrayOf(
-                                    Manifest.permission.ACCESS_FINE_LOCATION,
-                                    Manifest.permission.ACCESS_COARSE_LOCATION
-                                )
-                            )
-                        }
-                    )
-                }
+                AppNavigation(
+                    onRequestPermission = {
+                        permissionLauncher.launch(arrayOf(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        ))
+                    }
+                )
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.example.weatherappdanial.data.remote.dto
+package com.example.weatherappdanial.data.remote.dto.onecall
 
 
 import kotlinx.serialization.SerialName

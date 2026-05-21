@@ -82,4 +82,14 @@
         <item>З</item>
         <item>СЗ</item>
     </string-array>
+    <!-- Cities screen -->
+    <string name="cities_title">Погода</string>
+    <string name="current_location_label">Текущее место</string>
+    <string name="search_hint">Поиск города или аэропорта</string>
+    <string name="search_cancel">Отмена</string>
+    <string name="search_idle_hint">Введите название города</string>
+    <string name="search_empty">Ничего не найдено</string>
+    <string name="search_error_title">Не удалось найти город</string>
+    <string name="search_error_subtitle">Проверьте соединение</string>
+    <string name="max_min_label">Макс.:%1$d°, Мин.:%2$d°</string>
 </resources>

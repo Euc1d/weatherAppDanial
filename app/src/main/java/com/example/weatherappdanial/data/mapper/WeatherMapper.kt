@@ -1,14 +1,14 @@
 package com.example.weatherappdanial.data.mapper
 
-import com.example.weatherappdanial.data.local.entity.DailyForecastEntity
-import com.example.weatherappdanial.data.local.entity.ForecastDetailsEntity
-import com.example.weatherappdanial.data.local.entity.HourlyForecastEntity
-import com.example.weatherappdanial.data.local.entity.WeatherEntity
-import com.example.weatherappdanial.data.local.entity.WeatherWithRelations
-import com.example.weatherappdanial.data.local.entity.WindInfoEmbedded
-import com.example.weatherappdanial.data.remote.dto.Daily
-import com.example.weatherappdanial.data.remote.dto.Hourly
-import com.example.weatherappdanial.data.remote.dto.WeatherResponseDTO
+import com.example.weatherappdanial.data.local.entity.weather.DailyForecastEntity
+import com.example.weatherappdanial.data.local.entity.weather.ForecastDetailsEntity
+import com.example.weatherappdanial.data.local.entity.weather.HourlyForecastEntity
+import com.example.weatherappdanial.data.local.entity.weather.WeatherEntity
+import com.example.weatherappdanial.data.local.entity.weather.WeatherWithRelations
+import com.example.weatherappdanial.data.local.entity.weather.WindInfoEmbedded
+import com.example.weatherappdanial.data.remote.dto.onecall.Daily
+import com.example.weatherappdanial.data.remote.dto.onecall.Hourly
+import com.example.weatherappdanial.data.remote.dto.onecall.WeatherResponseDTO
 import com.example.weatherappdanial.domain.weather_model.DailyForeCast
 import com.example.weatherappdanial.domain.weather_model.ForeCastDetails
 import com.example.weatherappdanial.domain.weather_model.HourlyForeCast
@@ -28,7 +28,8 @@ fun WeatherResponseDTO.toWeatherEntity(cityName: String): WeatherEntity {
         currentTemp = current.temp.roundToInt(),
         maxTemp = today?.temp?.max?.roundToInt() ?: 0,
         minTemp = today?.temp?.min?.roundToInt() ?: 0,
-        todayDescription = current.weather.firstOrNull()?.description.orEmpty()
+        todayDescription = current.weather.firstOrNull()?.description.orEmpty(),
+        timezoneOffsetSec = timezoneOffset
     )
 }
 
@@ -74,7 +75,6 @@ fun Daily.toDailyEntity(cityName: String): DailyForecastEntity {
 
 
 fun WeatherWithRelations.toDomain(): WeatherData {
-    // Средний макс по всем дням (берём из строки "11°" -> 11)
     val maxTemps = dailyForecast.mapNotNull {
         it.maxTemp.dropLast(1).toIntOrNull()
     }
@@ -90,7 +90,8 @@ fun WeatherWithRelations.toDomain(): WeatherData {
             minTemp          = weather.minTemp,
             todayDescription = weather.todayDescription,
             avgMaxTemp       = avgMax,
-            diffFromAvgMax   = diff
+            diffFromAvgMax   = diff,
+            timezoneOffsetSec = weather.timezoneOffsetSec
         ),
         hourlyForeCast = hourlyForecast.sortedBy { it.timeStamp }.map { it.toDomain() },
         dailyForeCast  = dailyForecast
@@ -127,17 +128,6 @@ private fun HourlyForecastEntity.toDomain(): HourlyForeCast = HourlyForeCast(
     icon = icon
 )
 
-private fun DailyForecastEntity.toDomain(): DailyForeCast = DailyForeCast(
-    dayOfWeek = dayOfWeek.substringAfterLast("_").let { dt ->
-        SimpleDateFormat("EEE", Locale("ru"))
-            .format(Calendar.getInstance().apply { timeInMillis = dt.toLong() * 1000 }.time)
-            .replaceFirstChar { it.uppercase() }
-    },
-    icon = icon,
-    minTemp = minTemp,
-    maxTemp = maxTemp,
-    summary = summary
-)
 
 private fun ForecastDetailsEntity.toDomain(): ForeCastDetails = ForeCastDetails(
     windInfo = WindInfo(

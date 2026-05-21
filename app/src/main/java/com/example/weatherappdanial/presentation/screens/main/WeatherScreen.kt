@@ -3,40 +3,30 @@ package com.example.weatherappdanial.presentation.screens.main
 
 import android.content.Intent
 import android.provider.Settings
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CloudOff
 import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.GpsOff
 import androidx.compose.material.icons.filled.LocationOff
 import androidx.compose.material.icons.filled.WifiOff
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.weatherappdanial.R
-import com.example.weatherappdanial.base_ui_utils.background.resolveBackground
-import com.example.weatherappdanial.base_ui_utils.background.toDrawableRes
 import com.example.weatherappdanial.base_ui_utils.ui.WeatherErrorScreen
-import com.example.weatherappdanial.ui.base_theme.PrimaryTheme
+import com.example.weatherappdanial.base_ui_utils.ui.WeatherLoadingScreen
 
 @Composable
 fun WeatherScreen(
     onRequestPermission: () -> Unit,
+    onOpenCities: () -> Unit,
     viewModel: WeatherViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -49,12 +39,15 @@ fun WeatherScreen(
         is WeatherUiState.Content -> {
 
             LaunchedEffect(s.data.cachedAt, s.banner) { isRefreshing = false }
+            val tempUnit by viewModel.temperatureUnit.collectAsStateWithLifecycle()
 
             WeatherMainContent(
                 state = s,
                 isRefreshing = isRefreshing,
+                tempUnit = tempUnit,
                 onRefresh = { isRefreshing = true; viewModel.loadWeather() },
-                onDismissBanner = viewModel::dismissBanner
+                onDismissBanner = viewModel::dismissBanner,
+                onOpenCities = onOpenCities
             )
         }
 
@@ -107,30 +100,3 @@ fun WeatherScreen(
     }
 }
 
-
-@Composable
-fun WeatherLoadingScreen() {
-
-    Box(modifier = Modifier.fillMaxSize()) {
-
-        Image(
-            painter = painterResource(
-                resolveBackground(false).toDrawableRes()
-            ),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(PrimaryTheme.colors.backgroundDark.copy(alpha = 0.25f))
-        )
-
-        CircularProgressIndicator(
-            modifier = Modifier.align(Alignment.Center),
-            color = PrimaryTheme.colors.textPrimary
-        )
-    }
-}
