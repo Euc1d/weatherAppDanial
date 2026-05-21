@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -37,6 +38,34 @@ import com.example.weatherappdanial.R
 import com.example.weatherappdanial.base_ui_utils.background.resolveBackground
 import com.example.weatherappdanial.base_ui_utils.background.toDrawableRes
 import com.example.weatherappdanial.ui.base_theme.PrimaryTheme
+
+
+@Composable
+fun WeatherLoadingScreen() {
+
+    Box(modifier = Modifier.fillMaxSize()) {
+
+        Image(
+            painter = painterResource(
+                resolveBackground(false).toDrawableRes()
+            ),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(PrimaryTheme.colors.backgroundDark.copy(alpha = 0.25f))
+        )
+
+        CircularProgressIndicator(
+            modifier = Modifier.align(Alignment.Center),
+            color = PrimaryTheme.colors.textPrimary
+        )
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

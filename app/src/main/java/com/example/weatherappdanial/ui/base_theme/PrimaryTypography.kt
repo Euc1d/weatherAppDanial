@@ -9,41 +9,27 @@ import androidx.compose.ui.unit.sp
 @Immutable
 data class PrimaryTypography(
 
-    // ── Top section (WeatherEntity) ──────────────────────────────
-    // "Алматы" — large city name just below status bar
+
     val cityTitle: TextStyle,
-    // "11°" — the giant main temperature
     val temperatureDisplay: TextStyle,
-    // "В основном солнечно" — one-line condition description
+
     val conditionLabel: TextStyle,
-    // "Макс.: 11°, мин.: 5°" — compact min/max line
+
     val minMaxLabel: TextStyle,
 
-    // ── Hourly strip (HourlyForecastEntity) ──────────────────────
-    // "16", "17", "Закат" — time labels
+
     val hourlyTime: TextStyle,
-    // "10°", "9°" — temperature per hour
     val hourlyTemp: TextStyle,
 
-    // ── 10-day forecast (DailyForecastEntity) ────────────────────
-    // "Сегодня", "Сб", "Вс" — day name column
+
     val forecastDayName: TextStyle,
-    // "5°"  "11°" — min/max temperature ends of the range bar
     val forecastTempRange: TextStyle,
 
-    // ── Wide detail cards (ForecastDetailsEntity) ────────────────
-    // "ВЕТЕР", "УФ-ИНДЕКС", "ВЛАЖНОСТЬ" — small ALL-CAPS card label
     val detailCardLabel: TextStyle,
-    // "6 км/ч", "17:29", "70%", "1 022" — the big value
     val detailCardValue: TextStyle,
-    // "Порывы ветра: 14 км/ч", "Остаётся низким до конца дня."
-    // — the small descriptive line at the bottom of each card
     val detailCardSubtext: TextStyle,
 
-    // ── Legacy / general (kept for backward compat) ──────────────
-    // General card label text (maps to detailCardLabel use-case)
     val cardTextStyle: TextStyle,
-    // General screen-level title fallback
     val screenTitle: TextStyle,
 )
 

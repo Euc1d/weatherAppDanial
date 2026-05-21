@@ -8,14 +8,13 @@ enum class WeatherBackground {
     MORNING_CLEAR, DAY_CLEAR, EVENING_CLEAR, NIGHT_CLEAR,
     MORNING_RAIN,  DAY_RAIN,  EVENING_RAIN,  NIGHT_RAIN
 }
-
-fun resolveBackground(isRaining: Boolean): WeatherBackground {
-    val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+fun resolveBackground(isRaining: Boolean, hourOverride: Int? = null): WeatherBackground {
+    val hour = hourOverride ?: Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
     val slot = when (hour) {
-        in 6..11  -> 0   // morning
-        in 12..17 -> 1   // day
-        in 18..23 -> 2   // evening
-        else      -> 3   // night 0-5
+        in 6..11  -> 0
+        in 12..17 -> 1
+        in 18..23 -> 2
+        else      -> 3
     }
     return if (isRaining) {
         arrayOf(
@@ -33,7 +32,14 @@ fun resolveBackground(isRaining: Boolean): WeatherBackground {
         )[slot]
     }
 }
+fun localHourForCity(timezoneOffsetSec: Int): Int {
+    val utcMs = System.currentTimeMillis()
+    val localMs = utcMs + timezoneOffsetSec * 1000L
+    return ((localMs / 1000 / 3600) % 24).toInt()
+}
 
+fun Long.toLocalHour(): Int =
+    Calendar.getInstance().apply { timeInMillis = this@toLocalHour * 1000 }.get(Calendar.HOUR_OF_DAY)
 @DrawableRes
 fun WeatherBackground.toDrawableRes(): Int = when (this) {
     WeatherBackground.MORNING_CLEAR -> R.drawable.ic_background_n_6
