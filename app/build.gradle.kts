@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -5,38 +7,81 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
 }
-
+val localProps = Properties().apply {
+    load(rootProject.file("local.properties").inputStream())
+}
 android {
     namespace = "com.example.weatherappdanial"
     compileSdk {
         version = release(36)
     }
-
     defaultConfig {
         applicationId = "com.example.weatherappdanial"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-
+        buildConfigField(
+            "String",
+            "WEATHER_API_KEY",
+            "\"${localProps["WEATHER_API_KEY"]}\""
+        )
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        create("release") {
+            storeFile     = file(localProps["KEYSTORE_PATH"] as String)
+            storePassword = localProps["KEYSTORE_PASSWORD"] as String
+            keyAlias      = localProps["KEY_ALIAS"]         as String
+            keyPassword   = localProps["KEY_PASSWORD"]      as String
+        }
+    }
+
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
+        }
+        debug {
+            isDebuggable = true
+            isMinifyEnabled = false
+            isShrinkResources = false
+            applicationIdSuffix = ".debug"
         }
     }
+
+
+
+    flavorDimensions += "version"
+    productFlavors{
+        create("qa"){
+            dimension = "version"
+            versionNameSuffix = "-qa"
+            applicationIdSuffix = ".qa"
+        }
+        create("dev"){
+            dimension = "version"
+            versionNameSuffix = "-dev"
+            applicationIdSuffix = ".dev"
+        }
+        create("prod"){
+            dimension = "version"
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 

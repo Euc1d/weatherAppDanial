@@ -87,8 +87,6 @@ interface DataModule {
         @Provides @Singleton @Named("nominatim")
         fun provideNominatimRetrofit(converter: Converter.Factory): Retrofit {
             val client = OkHttpClient.Builder()
-                .connectTimeout(10, java.util.concurrent.TimeUnit.SECONDS)
-                .readTimeout(10, java.util.concurrent.TimeUnit.SECONDS)
                 .addInterceptor { chain ->
                     val request = chain.request().newBuilder()
                         .header("User-Agent", "WeatherAppDanial/1.0 (Android; contact: kdanial111@mail.ru)")

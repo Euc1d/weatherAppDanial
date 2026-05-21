@@ -82,6 +82,17 @@
         <item>З</item>
         <item>СЗ</item>
     </string-array>
+    <string name="weather_title">Погода</string>
+
+    <string name="celsius_label">Градусы Цельсия</string>
+    <string name="fahrenheit_label">Градусы Фаренгейта</string>
+
+    <string name="celsius_symbol">°C</string>
+    <string name="fahrenheit_symbol">°F</string>
+
+    <string name="coordinates_format">%1$.4f, %2$.4f</string>
+
+    <string name="current_temp_format">%1$d°</string>
     <!-- Cities screen -->
     <string name="cities_title">Погода</string>
     <string name="current_location_label">Текущее место</string>
