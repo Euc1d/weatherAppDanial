@@ -1,5 +1,6 @@
 package com.example.weatherappdanial.data.repository
 
+import com.example.weatherappdanial.BuildConfig
 import com.example.weatherappdanial.data.local.entity.city.CityDao
 import com.example.weatherappdanial.data.local.entity.city.SavedCityEntity
 import com.example.weatherappdanial.data.remote.api.NominatimApiService
@@ -15,11 +16,9 @@ import kotlinx.coroutines.flow.map
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
-import javax.inject.Inject
 import kotlin.math.roundToInt
-import com.example.weatherappdanial.BuildConfig
 
-class CityRepositoryImpl @Inject constructor(
+class CityRepositoryImpl (
     private val weatherApi  : WeatherApiService,
     private val nominatimApi: NominatimApiService,
     private val dao         : CityDao

@@ -14,16 +14,16 @@ interface WeatherDao {
     @Query("SELECT * FROM weather WHERE cityName = :cityName")
     fun getWeatherData(cityName: String): Flow<WeatherWithRelations?>
 
-    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWeather(weather: WeatherEntity)
 
-    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHourlyForecast(items: List<HourlyForecastEntity>)
 
-    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDailyForecast(items: List<DailyForecastEntity>)
 
-    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertForecastDetails(details: ForecastDetailsEntity)
 
     @Transaction

@@ -1,34 +1,17 @@
 package com.example.weatherappdanial.di
 
-import android.content.Context
 import com.example.weatherappdanial.data.repository.LocationRepositoryImpl
+import com.example.weatherappdanial.data.repository.UserPrefsRepositoryImpl
+import com.example.weatherappdanial.domain.pref.UserPrefsRepository
 import com.example.weatherappdanial.domain.repository.LocationRepository
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-class LocationModule {
-    @Provides
-    @Singleton
-    fun provideFusedLocationClient(
-        @ApplicationContext context: Context
-    ): FusedLocationProviderClient {
-        return LocationServices.getFusedLocationProviderClient(context)
-    }
-
-    @Provides
-    @Singleton
-    fun provideLocationRepository(
-        @ApplicationContext context: Context,
-        fusedClient: FusedLocationProviderClient
-    ): LocationRepository {
-        return LocationRepositoryImpl(context, fusedClient)
-    }
+val locationModule = module {
+    single { LocationServices.getFusedLocationProviderClient(androidContext()) }
+    single<LocationRepository> { LocationRepositoryImpl(androidContext(), get()) }
+}
+val prefsModule = module {
+    single<UserPrefsRepository> { UserPrefsRepositoryImpl(androidContext()) }
 }
