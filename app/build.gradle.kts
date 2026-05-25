@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlinx.serialization)
     id("com.google.devtools.ksp")
-    id("com.google.dagger.hilt.android")
 }
 val localProps = Properties().apply {
     load(rootProject.file("local.properties").inputStream())
@@ -53,6 +52,7 @@ android {
             isMinifyEnabled = false
             isShrinkResources = false
             applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
         }
     }
 
@@ -86,13 +86,16 @@ android {
 }
 
 dependencies {
-    implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
-    implementation("com.google.dagger:hilt-android:2.59.2")
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.androidx.compose.navigation)
+
+
     implementation(libs.material3)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.animation.core)
     implementation(libs.androidx.compose.animation)
-    ksp("com.google.dagger:hilt-android-compiler:2.59.2") // в либс переводить не буду  так как позже миграция на коин
 
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
@@ -100,6 +103,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.compose.material.icons.core)
+    implementation(libs.androidx.navigation.compose)
 
 
     ksp(libs.androidx.room.compiler)

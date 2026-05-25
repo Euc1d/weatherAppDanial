@@ -17,17 +17,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.weatherappdanial.R
 import com.example.weatherappdanial.base_ui_utils.ui.WeatherErrorScreen
 import com.example.weatherappdanial.base_ui_utils.ui.WeatherLoadingScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun WeatherScreen(
     onRequestPermission: () -> Unit,
     onOpenCities: () -> Unit,
-    viewModel: WeatherViewModel = hiltViewModel()
+    viewModel: WeatherViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current

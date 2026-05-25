@@ -56,7 +56,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.weatherappdanial.R
 import com.example.weatherappdanial.base_ui_utils.background.localHourForCity
@@ -68,6 +67,7 @@ import com.example.weatherappdanial.domain.city_model.CityLocation
 import com.example.weatherappdanial.domain.city_model.CitySummary
 import com.example.weatherappdanial.domain.pref.TemperatureUnit
 import com.example.weatherappdanial.ui.base_theme.PrimaryTheme
+import org.koin.androidx.compose.koinViewModel
 
 private val HPAD = Modifier.padding(horizontal = 16.dp)
 
@@ -75,7 +75,7 @@ private val HPAD = Modifier.padding(horizontal = 16.dp)
 fun CitiesScreen(
     onCityClick: (CityLocation) -> Unit,
     onCurrentLocation: () -> Unit,
-    vm: CitiesViewModel = hiltViewModel()
+    vm: CitiesViewModel = koinViewModel()
 ) {
     val tempUnit    by vm.temperatureUnit.collectAsStateWithLifecycle()
     val cities by vm.cities.collectAsStateWithLifecycle()

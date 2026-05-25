@@ -12,17 +12,14 @@ import com.example.weatherappdanial.domain.result.WeatherError
 import com.example.weatherappdanial.domain.usecases.GetCurrentLocation
 import com.example.weatherappdanial.domain.usecases.GetWeatherData
 import com.example.weatherappdanial.domain.weather_model.WeatherData
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class WeatherViewModel @Inject constructor(
+class WeatherViewModel (
     private val getLocation: GetCurrentLocation,
     private val getWeatherData: GetWeatherData,
     private val prefsRepo: UserPrefsRepository,

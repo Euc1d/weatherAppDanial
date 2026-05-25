@@ -9,9 +9,8 @@ import androidx.activity.viewModels
 import com.example.weatherappdanial.navigation.AppNavigation
 import com.example.weatherappdanial.presentation.screens.main.WeatherViewModel
 import com.example.weatherappdanial.ui.base_theme.PrimaryTheme
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
+
 class MainActivity : ComponentActivity() {
 
     private val viewModel: WeatherViewModel by viewModels()

@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -40,7 +41,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
@@ -125,77 +125,79 @@ fun WeatherMainContent(
             else (1f - (scrollOffset / fadeDistance)).coerceIn(0f, 1f)
         }
     }
-    Scaffold(
-        modifier = modifier.fillMaxSize(),
-        topBar = {
-            CompactHeader(data.todayData, headerAlpha, tempUnit)
-        },
-        floatingActionButton = {
-            Box(
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .clickable(
-                        indication = null,
-                        interactionSource = remember { MutableInteractionSource() }) {
-                        onOpenCities()
-                    },
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_button_to_city),
-                    contentDescription = null,
-                    tint = Color.White,
-                    modifier = Modifier.clip(CircleShape)
+
+    Box(modifier = modifier.fillMaxSize()) {
+
+        Image(
+            painter      = painterResource(background.toDrawableRes()),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier     = Modifier.fillMaxSize()
+        )
+        Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.25f)))
+
+        PullToRefreshBox(
+            isRefreshing = isRefreshing,
+            onRefresh    = onRefresh,
+            modifier = Modifier.fillMaxSize(),
+            indicator = {
+                PullToRefreshDefaults.Indicator(
+                    isRefreshing = isRefreshing,
+                    modifier = Modifier.align(Alignment.TopCenter),
+                    color = PrimaryTheme.colors.textPrimary,
+                    containerColor = PrimaryTheme.colors.cardGlass,
+                    state = PullToRefreshState()
                 )
             }
-        }
-    ) { padding ->
-        Box(modifier = modifier.fillMaxSize()) {
-            Image(
-                painter = painterResource(background.toDrawableRes()),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.25f))
-            )
-            PullToRefreshBox(
-                isRefreshing = isRefreshing,
-                onRefresh = onRefresh,
-                modifier = Modifier.fillMaxSize(),
-                indicator = {
-                    PullToRefreshDefaults.Indicator(
-                        isRefreshing = isRefreshing,
-                        modifier = Modifier.align(Alignment.TopCenter),
-                        color = PrimaryTheme.colors.textPrimary,
-                        containerColor = PrimaryTheme.colors.cardGlass,
-                        state = PullToRefreshState()
-                    )
-                }
-            ) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(
-                        top = padding.calculateTopPadding(),
-                        bottom = 32.dp
-                    ),
-                    verticalArrangement = VSPACE,
-                    state = listState
-                ) {
-                    item { if (!isRefreshing) PtrHint() }
+        ) {
+            Column(modifier = Modifier.fillMaxSize()) {
 
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .statusBarsPadding()
+                        .height(48.dp)
+                        .graphicsLayer { alpha = 1f - headerAlpha }
+                ) {
+                    Column(
+                        modifier            = Modifier
+                            .align(Alignment.Center)
+                            .padding(horizontal = 56.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text      = data.todayData.cityName,
+                            style     = PrimaryTheme.typography.cityTitle,
+                            color     = PrimaryTheme.colors.textPrimary,
+                            maxLines  = 1,
+                            textAlign = TextAlign.Center
+                        )
+                        Text(
+                            text = "${data.todayData.currentTemp.formatTemp(tempUnit)} · " +
+                                    data.todayData.todayDescription.replaceFirstChar { it.uppercase() },
+                            style     = PrimaryTheme.typography.detailCardSubtext,
+                            color     = light_blue100,
+                            maxLines  = 1,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
+
+                // ── LazyColumn ────────────────────────────────────────────────
+                LazyColumn(
+                    state               = listState,
+                    modifier            = Modifier.fillMaxSize(),
+                    contentPadding      = PaddingValues(bottom = 32.dp),
+                    verticalArrangement = VSPACE
+                ) {
+                    // Большой хедер — исчезает при скролле
                     item {
-                        Spacer(modifier = Modifier.height((36 * headerAlpha).dp))
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .graphicsLayer {
-                                    alpha = headerAlpha
-                                    val scroll = listState.firstVisibleItemScrollOffset.toFloat()
-                                    translationY = -(scroll * 0.35f)
+                                    alpha        = headerAlpha
+                                    translationY = -(listState.firstVisibleItemScrollOffset * 0.3f)
                                 }
                         ) {
                             Header(
@@ -207,32 +209,30 @@ fun WeatherMainContent(
                         }
                     }
 
+                    item { if (!isRefreshing) PtrHint() }
+
                     item {
                         HourlyStrip(
-                            hourly = data.hourlyForeCast,
-                            sunrise = data.weatherDetail.sunrise,
-                            sunset = data.weatherDetail.sunset,
-                            daily = data.dailyForeCast,
+                            hourly   = data.hourlyForeCast,
+                            sunrise  = data.weatherDetail.sunrise,
+                            sunset   = data.weatherDetail.sunset,
+                            daily    = data.dailyForeCast,
                             tempUnit = tempUnit
                         )
                     }
 
                     item {
                         DailySection(
-                            daily = data.dailyForeCast,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .then(HPAD),
-                            tempUnit = tempUnit
+                            daily    = data.dailyForeCast,
+                            tempUnit = tempUnit,
+                            modifier = Modifier.fillMaxWidth().then(HPAD)
                         )
                     }
 
                     item {
                         WindSection(
-                            details = data.weatherDetail,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .then(HPAD)
+                            details  = data.weatherDetail,
+                            modifier = Modifier.fillMaxWidth().then(HPAD)
                         )
                     }
 
@@ -242,9 +242,7 @@ fun WeatherMainContent(
                     }
                     items(cards.chunked(2)) { pair ->
                         Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .then(HPAD),
+                            modifier              = Modifier.fillMaxWidth().then(HPAD),
                             horizontalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             pair.forEach { card -> DetailCard(card, Modifier.weight(1f)) }
@@ -255,14 +253,35 @@ fun WeatherMainContent(
                     item { Footer(data.cachedAt) }
                 }
             }
-            AnimatedVisibility(
-                visible = state.banner != null,
-                enter = slideInVertically { -it },
-                exit = slideOutVertically { -it },
-                modifier = Modifier.align(Alignment.TopCenter)
-            ) {
-                state.banner?.let { StaleBanner(it, onDismissBanner) }
-            }
+        }
+
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(end = 20.dp, bottom = 20.dp)
+                .clip(CircleShape)
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }) {
+                    onOpenCities()
+                },
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_button_to_city),
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier.clip(CircleShape)
+            )
+        }
+
+        AnimatedVisibility(
+            visible  = state.banner != null,
+            enter    = slideInVertically { -it },
+            exit     = slideOutVertically { -it },
+            modifier = Modifier.align(Alignment.TopCenter)
+        ) {
+            state.banner?.let { StaleBanner(it, onDismissBanner) }
         }
     }
 }

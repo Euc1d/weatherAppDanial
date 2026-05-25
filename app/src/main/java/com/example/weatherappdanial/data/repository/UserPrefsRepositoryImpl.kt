@@ -1,17 +1,16 @@
 package com.example.weatherappdanial.data.repository
 
 import android.content.Context
+import androidx.core.content.edit
 import com.example.weatherappdanial.domain.pref.TemperatureUnit
 import com.example.weatherappdanial.domain.pref.UserPrefsRepository
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
-class UserPrefsRepositoryImpl @Inject constructor(
-    @ApplicationContext context: Context
+class UserPrefsRepositoryImpl (
+    context: Context
 ) : UserPrefsRepository {
 
     private val prefs = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
@@ -25,6 +24,6 @@ class UserPrefsRepositoryImpl @Inject constructor(
     }.distinctUntilChanged()
 
     override suspend fun setTemperatureUnit(unit: TemperatureUnit) {
-        prefs.edit().putString("temp_unit", unit.name).apply()
+        prefs.edit { putString("temp_unit", unit.name) }
     }
 }
